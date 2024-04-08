@@ -1,0 +1,54 @@
+[package]
+name = "tpm-ws"
+version = "0.1.0"
+edition = "2021"
+authors = [ "James Connolly <jconnoll1@stevens.edu>" ]
+license = "GPL-3.0-or-later"
+
+[dependencies.tokio]
+version = "1"
+features = [ "macros", "rt-multi-thread", "sync" ]
+
+[dependencies.serde]
+version = "1.0"
+features = [ "derive" ]
+
+[dependencies.diesel]
+version = "2.1"
+features = [ "sqlite" ]
+
+[target.'cfg(windows)'.dependencies.libsqlite3-sys]
+version = "0.28"
+features = [ "bundled" ]
+
+[target.'cfg(target_os = "linux")'.dependencies.oo7]
+version = "0.3"
+
+[dependencies.tss-esapi]
+version = "7.5"
+optional = true
+
+[dependencies.rand_core]
+version = "0.6"
+features = [ "getrandom" ]
+
+[target.'cfg(windows)'.dependencies.windows]
+version = "0.54"
+features = [ "Win32_Security_Credentials", "Win32_System_SystemInformation", "Win32_System_Time" ]
+
+[dependencies]
+tokio-tungstenite = "0.21"
+log = "0.4"
+pretty_env_logger = "0.5"
+futures = "0.3"
+rmp-serde = "1.1"
+cryptoki = "0.6"
+p256 = "0.13"
+diesel_migrations = "2.1"
+zeroize = "1.7"
+aes-gcm = "0.10"
+sha3 = "0.10"
+
+[features]
+default = [ "tpm" ]
+tpm = [ "dep:tss-esapi" ]
